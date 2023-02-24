@@ -1,5 +1,5 @@
 <template class="antialiased text-gray-700 bg-gray-100">
-    <div class="flex w-full h-screen justify-center items-center" id="app">
+    <div class="flex w-full h-screen justify-center items-center">
         <div class="w-full max-w-xl">
             <h1 class="font-bold text-5xl text-center text-indigo-700">
                 Simple Quiz
@@ -10,21 +10,20 @@
                         {{ questions[index]['question'] }}
                     </p>
                     <label :for="key" class="block mt-4 border border-gray-300 rounded-lg py-2 px-6 text-lg"
-                        v-for="answer, key in questions[index]['answers']" 
-                        :class="{ 'hover:bg-gray-100 cursor-pointer': selectedAnswer == '' },
-                        {'bg-red-200': selectedAnswer == key },
-                            {'bg-green-200' : key == questions[index]['correctAnswer'] && selectedAnswer != ''}">
-                        <input type="radio" :id="key" class="hidden" :value="key" @change="answered($event)" v-model="selectedAnswer"
-                            :disabled="selectedAnswer != ''" /> {{ answer }}
+                        v-for="answer, key in questions[index]['answers']" :class="{ 'hover:bg-gray-100 cursor-pointer': selectedAnswer == '' },
+                            { 'bg-red-200': selectedAnswer == key && key != questions[index]['correctAnswer'] },
+                            { 'bg-green-200': key == questions[index]['correctAnswer'] && selectedAnswer != '' }">
+                        <input type="radio" :id="key" class="hidden" :value="key" @change="answered($event)"
+                            v-model="selectedAnswer" :disabled="selectedAnswer != ''" /> {{ answer }}
                     </label>
                     <div class="mt-6 flow-root">
                         <button
                             class="float-right px-5 py-2 bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full"
-                            v-show="selectedAnswer != '' && index < count-1" @click="nextQuestion">Next
+                            v-show="selectedAnswer != '' && index < count - 1" @click="nextQuestion">Next
                             &gt</button>
                         <button
                             class="float-right px-5 py-2 bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full"
-                            v-show="selectedAnswer != '' && index == count-1" @click="showResults">Finish</button>
+                            v-show="selectedAnswer != '' && index == count - 1" @click="showResults">Finish</button>
                     </div>
                 </div>
                 <div v-else>
@@ -83,6 +82,7 @@ export default {
     methods: {
         answered(e) {
             this.selectedAnswer = e.target.value;
+
             if (this.selectedAnswer == this.questions[this.index]['correctAnswer'])
                 this.correctAnswer++
             else

@@ -9,6 +9,7 @@ lerna-debug.log*
 .nuxt
 .nuxt/types
 models
+package-lock.json
 
 node_modules
 
