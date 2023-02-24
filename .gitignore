@@ -10,6 +10,8 @@ lerna-debug.log*
 .nuxt/types
 models
 
+package-lock.json
+
 node_modules
 
 amplify
